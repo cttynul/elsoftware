@@ -16,7 +16,7 @@ Ci tengo a precisare che ha contribuito a rendere il codice ancora più orribile
 ```
 # python elsoftware.py
 ```
-3. Trusta il processo
+3. **Trusta il processo**
 
 ## License
 ```
