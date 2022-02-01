@@ -12,12 +12,11 @@ Ci tengo a precisare che ha contribuito a rendere il codice ancora più orribile
 ```
 # pip install -r requirements.txt
 ```
-2. Scariacti gli XLS delle statistiche degli ultimi 3 anni da Fantagazzetta.
-3. Runna **el software**
+2. Runna **el software**
 ```
 # python elsoftware.py
 ```
-4. Trusta il processo
+3. Trusta il processo
 
 ## License
 ```

@@ -1,105 +1,84 @@
+import requests
 import pandas as pd
+
+codice_segretissimo = ["-6", "1614489243000", "1643664948000"]
+years = ["2019-20", "2020-21", "2021-22"]
+years_compact = ["19", "20", "21"]
+#years = ["2015-16", "2016-17", "2017-18"] Solo per ricordo
+
+open('Quotazioni_Fantacalcio_Ruoli_Fantagazzetta.xlsx', 'wb').write(requests.get("https://www.fantacalcio.it/Servizi/Excel.ashx?type=0&r=1&t=" + codice_segretissimo[-1], allow_redirects=True).content)
+for y in years: open('Statistiche_Fantacalcio_' + y + '_Fantagazzetta.xlsx', 'wb').write(requests.get("https://www.fantacalcio.it/Servizi/Excel.ashx?type=2&r=1&t=" + codice_segretissimo[years.index(y)] + "&s=" + y, allow_redirects=True).content)
+
 dataset_quotazioni = pd.read_excel("Quotazioni_Fantacalcio_Ruoli_Fantagazzetta.xlsx",header = 1)
 
 #debug 
-list(dataset_quotazioni.columns.values)
+#list(dataset_quotazioni.columns.values)
 #['Id', 'R', 'Nome', 'Squadra', 'Qt. A', 'Qt. I', 'Diff.']
 
 #droppo le colonne che non voglio utilizzare nel dataset finale
 
 dataset_quotazioni = dataset_quotazioni.drop('Id',1)
-
 dataset_quotazioni = dataset_quotazioni.drop('Squadra',1)
 dataset_quotazioni = dataset_quotazioni.drop('Qt. A',1)
 dataset_quotazioni = dataset_quotazioni.drop('Diff.',1)
 
 #debug
-list(dataset_quotazioni.columns.values)
+#list(dataset_quotazioni.columns.values)
 #['Nome', 'Qt. I']
 
-dataset_statistiche1 = pd.read_excel("Statistiche_Fantacalcio_2015-16_Fantagazzetta.xlsx",header = 1)
+dataset_statistiche1 = pd.read_excel("Statistiche_Fantacalcio_" + years[0] + "_Fantagazzetta.xlsx",header = 1)
 
 #debug 
-list(dataset_statistiche1.columns.values)
-#['Id', 'R', 'Nome', 'Squadra', 'Pg_15', 'Mv_15', 'Mf_15', 'Gf_15', 'Gs_15', 'Rp_15', 'Rc_15', 'R+_15', 'R-_15', 'Ass_15', 'Asf_15', 'Amm_15', 'Esp_15', 'Au_15']
+#list(dataset_statistiche1.columns.values)
+#to_be_removed = ['Id', 'R', 'Nome', 'Squadra', 'Pg_' + years_compact[0], 'Mv_' + years_compact[0], 'Mf_' + years_compact[0], 'Gf_' + years_compact[0], 'Gs_' + years_compact[0], 'Rp_' + years_compact[0], 'Rc_' + years_compact[0], 'R+_' + years_compact[0], 'R-_' + years_compact[0], 'Ass_' + years_compact[0], 'Asf_' + years_compact[0], 'Amm_' + years_compact[0], 'Esp_' + years_compact[0], 'Au_' + years_compact[0]]
 
 #droppo le colonne che non voglio utilizzare nel dataset finale
-
-dataset_statistiche1 = dataset_statistiche1.drop('Id',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Squadra',1)
-dataset_statistiche1 = dataset_statistiche1.drop('R',1)
 #Cancello la media voto, considero la media voto con bonus/malus
-dataset_statistiche1 = dataset_statistiche1.drop('Mv_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Gf_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Gs_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Rp_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Rc_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('R+_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('R-_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Ass_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Asf_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Amm_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Esp_15',1)
-dataset_statistiche1 = dataset_statistiche1.drop('Au_15',1)
+to_be_removed = ['Id', 'R', 'Squadra', 'Mv', 'Gf', 'Gs', 'Rp', 'Rc', 'R+', 'R-', 'Ass', 'Asf', 'Amm', 'Esp', 'Au']
 
-list(dataset_statistiche1.columns.values)
+for e in to_be_removed: 
+    try: dataset_statistiche1 = dataset_statistiche1.drop(e, 1)
+    except: pass
+
+    
+#list(dataset_statistiche1.columns.values)
+
 #ruolo, nome, partite_giocate,media_fantacalcio
-#['R', 'Nome', 'Pg_15', 'Mf_15']
+#['R', 'Nome', 'Pg_' + years_compact[0], 'Mf_' + years_compact[0]]
 
-dataset_statistiche2 = pd.read_excel("Statistiche_Fantacalcio_2016-17_Fantagazzetta.xlsx",header = 1)
+dataset_statistiche2 = pd.read_excel("Statistiche_Fantacalcio_" + years[1] + "_Fantagazzetta.xlsx",header = 1)
+#to_be_removed = ['Id', 'R', 'Nome', 'Squadra', 'Pg_' + years_compact[1], 'Mv_' + years_compact[1], 'Mf_' + years_compact[1], 'Gf_' + years_compact[1], 'Gs_' + years_compact[1], 'Rp_' + years_compact[1], 'Rc_' + years_compact[1], 'R+_' + years_compact[1], 'R-_' + years_compact[1], 'Ass_' + years_compact[1], 'Asf_' + years_compact[1], 'Amm_' + years_compact[1], 'Esp_' + years_compact[1], 'Au_' + years_compact[1]]
+for e in to_be_removed: 
+    try: dataset_statistiche2 = dataset_statistiche2.drop(e, 1)
+    except: pass
 
+dataset_statistiche3 = pd.read_excel("Statistiche_Fantacalcio_" + years[2] + "_Fantagazzetta.xlsx",header = 1)
+#to_be_removed = ['Id', 'R', 'Nome', 'Squadra', 'Pg_' + years_compact[2], 'Mv_' + years_compact[2], 'Mf_' + years_compact[2], 'Gf_' + years_compact[2], 'Gs_' + years_compact[2], 'Rp_' + years_compact[2], 'Rc_' + years_compact[2], 'R+_' + years_compact[2], 'R-_' + years_compact[2], 'Ass_' + years_compact[2], 'Asf_' + years_compact[2], 'Amm_' + years_compact[2], 'Esp_' + years_compact[2], 'Au_' + years_compact[2]]
+for e in to_be_removed: 
+    try: dataset_statistiche3 = dataset_statistiche3.drop(e, 1)
+    except: pass
 
-dataset_statistiche2 = dataset_statistiche2.drop('Id',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Squadra',1)
-dataset_statistiche2 = dataset_statistiche2.drop('R',1)
-#Cancello la media voto, considero la media voto con bonus/malus
-dataset_statistiche2 = dataset_statistiche2.drop('Mv_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Gf_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Gs_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Rp_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Rc_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('R+_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('R-_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Ass_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Asf_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Amm_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Esp_16',1)
-dataset_statistiche2 = dataset_statistiche2.drop('Au_16',1)
-
-
-dataset_statistiche3 = pd.read_excel("Statistiche_Fantacalcio_2017-18_Fantagazzetta.xlsx",header = 1)
-
-
-dataset_statistiche3 = dataset_statistiche3.drop('Id',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Squadra',1)
-dataset_statistiche3 = dataset_statistiche3.drop('R',1)
-#Cancello la media voto, considero la media voto con bonus/malus
-dataset_statistiche3 = dataset_statistiche3.drop('Mv_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Gf_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Gs_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Rp_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Rc_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('R+_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('R-_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Ass_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Asf_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Amm_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Esp_17',1)
-dataset_statistiche3 = dataset_statistiche3.drop('Au_17',1)
-
+# converti in pd
 df1 = pd.DataFrame(dataset_quotazioni)
 df2 = pd.DataFrame(dataset_statistiche1)
 df3 = pd.DataFrame(dataset_statistiche2)
 df4 = pd.DataFrame(dataset_statistiche3)
 
+print(df1)
+print(df2)
+print(df3)
+print(df4)
 
-dataset = df1.merge(df2,on="Nome").merge(df3,on="Nome").merge(df4,on="Nome")
-#result = dataset.sort_values(by='Qt. I')
+
+dataset = df1.merge(df2, on="Nome").merge(df3, on="Nome").merge(df4, on="Nome")
+result = dataset.sort_values(by='Qt. I')
+
+print(dataset)
 
 media_giocatori = []
 for index, row in dataset.iterrows():
-	if  row.Pg_17 > 0:	 
-		media_pesata_partite_giocate = (row.Pg_15/38 * row.Mf_15)*0.20 + (row.Pg_16/38 * row.Mf_16)*0.80 #+ (row.Pg_17/38 * row.Mf_17)*0.20
+	if  row.Pg_x > 0:	 
+		media_pesata_partite_giocate = (row.Pg_x/38 * row.Mf_x)*0.20 + (row.Pg_y/38 * row.Mf_y)*0.80
 		media_giocatori.append(media_pesata_partite_giocate)
 	else:
 		media_giocatori.append(0)
@@ -119,12 +98,14 @@ result = dataset.sort_values(by="media")
 total = []
 for index, row in dataset.iterrows():
 	if  row.mediaGiocatori > 0:	 
-		total.append(row.mediaGiocatori*row.media*row['Mf_17'])
+		total.append(row.mediaGiocatori*row.media*row['Mf'])
 	else:
 		total.append(0)
 
 dataset["convenienza"] = total
-result = dataset.sort_values(by="convenienza",ascending='false')
+result = dataset.sort_values(by="convenienza",ascending=False)
+
+print(result)
 
 with open("dataset_att.csv", "w") as f:
 	df = result[result["R"] == "A"]
