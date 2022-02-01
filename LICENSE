@@ -1,30 +1,7 @@
-# el software ⚽
-Vinci al Fantacalcio usando librerie di pandas a caso, facendo credere a tutti che tu viva nel futuro e stia facendo il fantacalcio utilizzando il machine learning.
+                      Learning Only License License (LOL)
 
-## Disclaimer
-Lasciando fare l'asta a questo software sono arrivato **PENULTIMO**, però ho scoperto Zaccagni negli anni d'oro a Verona. Il codice l'ho scritto tipo 5 anni fa, non mi scuso per eventuali abomini al suo interno.
-Se sei allergico allo spaghetti code runna e basta.
-
-Ci tengo a precisare che ha contribuito a rendere il codice ancora più orribile il mio afk friends **MC**, no non è un rapper scongelato direttamente dal 2010.
-
-## Usage
-1. Installa ciò che serve
-```
-# pip install -r requirements.txt
-```
-2. Scariacti gli XLS delle statistiche degli ultimi 3 anni da Fantagazzetta.
-3. Runna **el software**
-```
-# python elsoftware.py
-```
-4. Trusta il processo
-
-## License
-```
-                   Learning Only License License (LOL)
-
-                      Copyright (c) 2020, cttynul
-                          All rights reserved.
+                         Copyright (c) 2018, cttynul
+                             All rights reserved.
 
  *  The intended purpose of this code is educational only, and that purpose
     must be considered in any use or redistribution of the code or any
@@ -87,4 +64,3 @@ Ci tengo a precisare che ha contribuito a rendere il codice ancora più orribile
     14. If you make a profit from your application that contains the original
         or modified code, attempt to contact the author(s) and thank them for
         their help.
-```
