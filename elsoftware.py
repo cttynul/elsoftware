@@ -17,10 +17,10 @@ dataset_quotazioni = pd.read_excel("Quotazioni_Fantacalcio_Ruoli_Fantagazzetta.x
 
 #droppo le colonne che non voglio utilizzare nel dataset finale
 
-dataset_quotazioni = dataset_quotazioni.drop('Id',1)
-dataset_quotazioni = dataset_quotazioni.drop('Squadra',1)
-dataset_quotazioni = dataset_quotazioni.drop('Qt. A',1)
-dataset_quotazioni = dataset_quotazioni.drop('Diff.',1)
+clean_quot = ['Id', 'Squadra', 'Qt. A', 'Diff.']
+for e in clean_quot:
+    try: dataset_quotazioni = dataset_statistiche1.drop(e, 1)
+    except: pass
 
 #debug
 #list(dataset_quotazioni.columns.values)
